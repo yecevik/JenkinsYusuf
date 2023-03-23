@@ -46,7 +46,7 @@ Feature: Add Employee
 
   @db @regression
   Scenario: Adding employee and verifying it is stored in database
-    And user enter "Mansoor" and "Raufi"
+    And user enter "Mustafa Kemal" and "Ataturk"
     And user captures employee id
     And user clicks on save button
     And added employee is displayed in database

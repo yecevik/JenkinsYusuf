@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -26,8 +27,20 @@ public class CommonMethods extends PageInitializer {
         ConfigReader.readProperties(Constants.CONFIGURATION_FILEPATH);
         switch (ConfigReader.getPropertyValue("browser")){
             case "chrome":
+
                 WebDriverManager.chromedriver().setup();
+                ChromeOptions chromeOptions=new ChromeOptions();
+                chromeOptions.addArguments("--no-sandbox");
+                chromeOptions.addArguments("--disable-dev-shm-usage");
+                chromeOptions.setHeadless(true);
+                driver = new ChromeDriver(chromeOptions);
+
+              /*  WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
+
+               */
+
+
                 break;
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
@@ -41,7 +54,7 @@ public class CommonMethods extends PageInitializer {
        driver.manage().timeouts().implicitlyWait(Constants.IMPLICIT_WAIT, TimeUnit.SECONDS);
        intializePageObjects();
 
-       //to confifure the file and pattern of it, we need to call the file
+       //to configure the file and pattern of it, we need to call the file
         DOMConfigurator.configure("log4j.xml");
         Log.startTestCase("My first test case is Login test");
         Log.info("My login test is going on");
